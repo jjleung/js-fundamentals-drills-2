@@ -184,7 +184,14 @@ var bigDataTrack = function(data, trackName){
  * @return {Object}
  */
 
-var incrementAge;
+var incrementAge = function(value, key){
+
+  let obj = {};
+  for(let i = 0; i < value.length; i++){
+    obj[key[i]] = (value[i] +1) + " years old";
+  }
+  return obj;
+}
 
 /* #movieRatings
  *
@@ -195,7 +202,19 @@ var incrementAge;
  * @return {Object}
  */
 
-var movieRatings;
+var movieRatings = function(key, value){
+  console.log(key);
+  console.log(value);
+  let obj = {};
+  let arr = [];
+  for(let i = 0; i < key.length; i++){
+
+  }
+  for(let j = 0; j < key.length; j++){
+    obj[arr[j]] = value[j];
+  }
+  return obj;
+}
 
 /* #sumOfAllStudents
  *
@@ -520,8 +539,8 @@ module.exports = {
   newTrack: newTrack,
   fullTimeStatus: fullTimeStatus,
   bigDataTrack: bigDataTrack,
-  incrementAge: null,
-  movieRatings: null,
+  incrementAge: incrementAge,
+  movieRatings: movieRatings,
   sumOfAllStudents: null,
   mapLanguageToCreator: null,
   mapOccurrences: null,

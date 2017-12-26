@@ -6,7 +6,17 @@
  * @return {Array}
  */
 
-var getAllUsernames;
+var getAllUsernames = function(obj){
+
+  const theObjs = Object.values(Object.values(Object.values(obj)[0])[0]);
+
+  let outArr = [];
+  for(let i = 0; i < theObjs.length; i++){
+    outArr.push(theObjs[i].username);
+  }
+
+  return outArr;
+}
 
 /* #hometownCity
  *
@@ -16,7 +26,10 @@ var getAllUsernames;
  * @return {String}
  */
 
-var hometownCity;
+var hometownCity = function(arr){
+
+ return arr[0].hometown.state.montana.city;
+}
 
 /* #usersCurrentState
  *
@@ -27,7 +40,15 @@ var hometownCity;
  * @return {Object}
  */
 
-var usersCurrentState;
+var usersCurrentState = function(data, usernames){
+
+  let result = {};
+
+  for(let i = 0; i < data.length; i++){
+    result[usernames[i]] = data[i][1].currentLocation.state;
+  }
+  return result;
+}
 
 /* #findAdmin
  *
@@ -37,7 +58,15 @@ var usersCurrentState;
  * @return {String}
  */
 
-var findAdmin;
+var findAdmin = function(obj){
+
+  const users = Object.values(obj.data.id);
+  for(let i = 0; i < users.length; i++){
+    if(users[i].admin === true){
+      return users[i].username;
+    }
+  }
+}
 
 /* #addNewMovie
  *
@@ -49,7 +78,12 @@ var findAdmin;
  * @return {Array}
  */
 
-var addNewMovie;
+var addNewMovie = function(data, id, newMovie){
+
+  let movies = data.data.id[id].favoriteMovies;
+  movies.push(newMovie);
+  return movies;
+}
 
 /* #favoriteBooks
  *
@@ -59,7 +93,17 @@ var addNewMovie;
  * @return {Array}
  */
 
-var favoriteBooks;
+var favoriteBooks = function(obj){
+
+  const users = Object.values(obj.data.id);
+  let outArr = [];
+  let outObj = {}
+  for(let i = 0; i < users.length; i++){
+    outObj[users[i].favoriteBook.author] = users[i].favoriteBook.title;
+  }
+  outArr.push(outObj);
+  return outArr;
+}
 
 /* #countTracks
  *
@@ -69,7 +113,10 @@ var favoriteBooks;
  * @return {Number}
  */
 
-var countTracks;
+var countTracks = function(obj){
+
+  return Object.keys(obj.devLeague.tracks).length;
+}
 
 /* #fullTimeStatus
  *
@@ -80,7 +127,12 @@ var countTracks;
  * @return {Object}
  */
 
-var fullTimeStatus;
+var fullTimeStatus = function(data, trackName){
+
+  let obj = Object.values(data[trackName])[0].fullTime;
+  obj.offered = true;
+  return obj;
+}
 
 /* #newTrack
  *
@@ -92,7 +144,11 @@ var fullTimeStatus;
  * @return {Object}
  */
 
-var newTrack;
+var newTrack = function(data, array, string){
+
+  data[string] = array[0];
+  return data;
+}
 
 /* #bigDataTrack
  *
@@ -103,7 +159,21 @@ var newTrack;
  * @return {Object }
  */
 
-var bigDataTrack;
+var bigDataTrack = function(data, trackName){
+  // console.log(data);
+  // console.log(trackName);
+  let result = {};
+  // console.log(data.tracks[trackName][0]);
+  let obj = data.tracks[trackName][0].fullTime;
+  // console.log(obj);
+  let students = obj.currentStudents;
+  // console.log(students);
+  obj.offered = true;
+  obj.currentStudents = 2*students + 10;
+
+  result[trackName] = obj;
+  return result;
+}
 
 /* #incrementAge
  *
@@ -440,16 +510,16 @@ var getPrices;
 var addName;
 
 module.exports = {
-  getAllUsernames: null,
-  hometownCity: null,
-  usersCurrentState: null,
-  findAdmin: null,
-  addNewMovie: null,
-  favoriteBooks: null,
-  countTracks: null,
-  newTrack: null,
-  fullTimeStatus: null,
-  bigDataTrack: null,
+  getAllUsernames: getAllUsernames,
+  hometownCity: hometownCity,
+  usersCurrentState: usersCurrentState,
+  findAdmin: findAdmin,
+  addNewMovie: addNewMovie,
+  favoriteBooks: favoriteBooks,
+  countTracks: countTracks,
+  newTrack: newTrack,
+  fullTimeStatus: fullTimeStatus,
+  bigDataTrack: bigDataTrack,
   incrementAge: null,
   movieRatings: null,
   sumOfAllStudents: null,

@@ -260,12 +260,15 @@ var sumOfAllStudents = function(obj){
  */
 
 var mapLanguageToCreator = function(data, createdBy, year){
-  console.log(data);
-  console.log(createdBy);
-  console.log(year);
+
   let obj = {};
-  let langArr = [];
-  let createArr = [];
+  let langs = Object.keys(data);
+
+  for(let i = 0; i < langs.length; i++){
+    if(data[langs[i]].yearCreated === year){
+      obj[data[langs[i]].createdBy] = langs[i];
+    }
+  }
   return obj;
 }
 
